@@ -1,0 +1,946 @@
+
+┌──────────────────────────────────────────────────────────────────────────┐
+│ ✈ AEROREESOLVE AI                         ● AGENT ACTIVE    Case #SK4821X │
+│ Autonomous Flight Resolution Agent                         [View Trace] │
+├───────────────┬──────────────────────────────────────┬───────────────────┤
+│               │                                      │                   │
+│  CASE         │        🤖 AGENT WORKSPACE            │  TOOL RUNTIME     │
+│  CONTEXT      │                                      │                   │
+│               │  ┌────────────────────────────────┐  │  ● LIVE           │
+│  Priya Nair   │  │  AGENT IS HANDLING CASE       │  │                   │
+│  Gold         │  │                                │  │  ✓ Booking Tool   │
+│               │  │  Cancellation detected         │  │  ✓ Flight Tool    │
+│  PNR          │  │  Evaluating resolution...     │  │  ✓ Policy Tool    │
+│  SK4821X      │  └────────────────────────────────┘  │                   │
+│               │                                      │  ACTION TOOLS      │
+│  SK-204       │  AGENT STATE                         │                   │
+│  DEL → GOI    │                                      │  ○ Rebook         │
+│               │  ✓ UNDERSTAND                        │  ○ Refund         │
+│  🔴 CANCELLED │  ✓ CONTEXT                           │  ○ Meal Voucher   │
+│               │  ✓ VERIFY                            │  ○ Lounge         │
+│  ───────────  │  ✓ POLICY                            │  ○ Hotel          │
+│               │  ● DECIDE                            │  ○ Escalate       │
+│  ISSUE        │  ○ ACT                               │                   │
+│  Cancellation │  ○ VERIFY RESULT                     │                   │
+│               │                                      │                   │
+│               │  ────────────────────────────────    │                   │
+│               │                                      │                   │
+│               │  AGENT DECISION                      │                   │
+│               │                                      │                   │
+│               │  2 eligible resolutions found        │                   │
+│               │                                      │                   │
+│               │  ┌─────────────┐ ┌───────────────┐  │                   │
+│               │  │ ✈ REBOOK    │ │ ₹ REFUND      │  │                   │
+│               │  │ ≤ 24 hours  │ │ Full refund   │  │                   │
+│               │  │             │ │               │  │                   │
+│               │  │ [SELECT]    │ │ [SELECT]      │  │                   │
+│               │  └─────────────┘ └───────────────┘  │                   │
+│               │                                      │                   │
+├───────────────┴──────────────────────────────────────┴───────────────────┤
+│                         AGENT EXECUTION                                  │
+│                                                                          │
+│  ✓ Context      ✓ Verify      ✓ Policy      ● Decision      ○ Action    │
+│       ────────────────●────────────────────────────────────────────      │
+├──────────────────────────────────────────────────────────────────────────┤
+│ 💬 CUSTOMER CONVERSATION                                  [Open Chat]   │
+│                                                                          │
+│ Customer: My flight was cancelled. What can you do?                     │
+│                                                                          │
+│ Agent: I've verified your booking and evaluated the available           │
+│        resolutions. You can rebook within 24 hours or request a refund. │
+└──────────────────────────────────────────────────────────────────────────┘
+
+
+You are working on my existing AeroResolve AI project.
+
+I want you to redesign ONLY the FRONTEND AI ASSISTANT / AGENT EXPERIENCE.
+
+IMPORTANT:
+- Do NOT rebuild the project.
+- Do NOT change the Node.js backend.
+- Do NOT change the Python FastAPI AI service.
+- Do NOT change LangGraph.
+- Do NOT change the policy engine.
+- Do NOT change database schema.
+- Do NOT change existing API contracts.
+- Do NOT replace real API data with mock data.
+- Do NOT break authentication.
+- Do NOT remove existing working functionality.
+- Do NOT expose Gemini API keys.
+- Use JavaScript only. No TypeScript.
+
+==================================================
+MAIN GOAL
+==================================================
+
+The current UI looks too much like:
+
+"Airline website + chatbot"
+
+I want it to clearly feel like:
+
+"AI AGENT OPERATING AN AIRLINE DISRUPTION CASE"
+
+The chat must become a secondary part of the interface.
+
+The main experience should communicate:
+
+UNDERSTAND
+→ CONTEXT
+→ VERIFY
+→ POLICY
+→ DECIDE
+→ ACT
+→ VERIFY RESULT
+→ COMPLETE / ESCALATE
+
+The UI should make the agent's REAL workflow visible.
+
+Do NOT create fake AI behavior.
+
+Do NOT show chain-of-thought or hidden reasoning.
+
+Only show safe, high-level agent states and real tool/action execution events returned by the application.
+
+==================================================
+1. AGENT COMMAND CENTER
+==================================================
+
+Redesign the AI Assistant page into a premium:
+
+"AeroResolve AI Agent Command Center"
+
+Keep the existing AeroResolve dark futuristic visual language:
+
+- dark near-black background
+- glassmorphism
+- subtle violet/blue/cyan gradients
+- aviation-inspired elements
+- premium typography
+- subtle glow
+- Framer Motion
+- clean spacing
+- responsive layout
+
+Avoid:
+- generic ChatGPT clone
+- generic SaaS dashboard
+- gaming UI
+- crypto UI
+- excessive 3D
+- unnecessary decorative animations
+
+The interface must look like a real airline resolution agent.
+
+==================================================
+2. HEADER
+==================================================
+
+Create:
+
+AeroResolve AI Agent
+
+Subtitle:
+
+"Autonomous Flight Resolution System"
+
+Right side:
+
+● AGENT ACTIVE
+
+Also show:
+
+Case / PNR:
+SK4821X
+
+Add:
+
+[ View Agent Trace ]
+
+The active state should change appropriately:
+
+- AGENT ACTIVE
+- WAITING FOR CUSTOMER
+- EXECUTING ACTION
+- RESOLUTION COMPLETE
+- SUPERVISOR REVIEW
+
+Do not fake these states.
+
+Derive them from actual application state.
+
+==================================================
+3. THREE-PANEL AGENT WORKSPACE
+==================================================
+
+Desktop layout:
+
+LEFT:
+CASE CONTEXT
+
+CENTER:
+AGENT WORKSPACE
+
+RIGHT:
+TOOL RUNTIME
+
+This should be the main visual focus.
+
+==================================================
+4. LEFT — CASE CONTEXT
+==================================================
+
+Create a premium case context card.
+
+Show real backend data:
+
+Customer name
+Membership tier
+PNR
+Flight number
+Route
+Travel date
+Departure time
+Flight status
+Disruption type
+
+Example:
+
+Priya Nair
+Gold
+
+PNR
+SK4821X
+
+SK-204
+DEL → GOI
+
+🔴 CANCELLED
+
+Issue:
+Airline cancellation
+
+IMPORTANT:
+
+Do NOT hardcode these values.
+
+Dynamically render whichever supplied booking is selected.
+
+Must work for:
+
+SK4821X
+TR1190B
+WL7742
+
+==================================================
+5. CENTER — AGENT WORKSPACE
+==================================================
+
+This is the MOST IMPORTANT part.
+
+Do NOT make this area primarily a chat window.
+
+Create an "Agent Workspace".
+
+At the top:
+
+🤖 AGENT IS HANDLING THIS CASE
+
+Then show the current high-level state.
+
+Example:
+
+"Evaluating available resolution..."
+
+or
+
+"Waiting for customer decision"
+
+or
+
+"Executing refund..."
+
+Do NOT expose internal chain-of-thought.
+
+==================================================
+6. AGENT STATE MACHINE
+==================================================
+
+Create a visually strong state machine:
+
+UNDERSTAND
+↓
+CONTEXT
+↓
+VERIFY
+↓
+POLICY
+↓
+DECIDE
+↓
+ACT
+↓
+VERIFY RESULT
+
+Each state should have:
+
+✓ completed
+● active
+○ pending
+
+Example:
+
+✓ UNDERSTAND
+✓ CONTEXT
+✓ VERIFY
+✓ POLICY
+● DECIDE
+○ ACT
+○ VERIFY RESULT
+
+Animate transitions subtly.
+
+The state must reflect actual frontend/application state.
+
+Do NOT invent state completion.
+
+==================================================
+7. AGENT DECISION CARD
+==================================================
+
+After the backend/policy response is available, show a large:
+
+"AGENT DECISION"
+
+card.
+
+Example:
+
+Flight cancellation detected.
+
+Policy evaluation completed.
+
+2 eligible resolutions found.
+
+Then display the actual allowed actions.
+
+For SK4821X:
+
+[ ✈ REBOOK FLIGHT ]
+Next available within 24 hours
+
+[ ₹ REQUEST REFUND ]
+Full refund
+
+For delays, display only the actions actually returned/allowed by backend.
+
+IMPORTANT:
+
+The frontend must NEVER independently calculate eligibility.
+
+Never calculate:
+
+- refund eligibility
+- hotel eligibility
+- lounge eligibility
+- compensation
+- rebooking eligibility
+- fare difference
+- escalation requirements
+
+The backend policy engine remains the source of truth.
+
+==================================================
+8. ACTION EXECUTION EXPERIENCE
+==================================================
+
+When the customer selects an action:
+
+DO NOT immediately show success.
+
+Show:
+
+AGENT EXECUTION
+
+✓ Booking verified
+
+✓ Policy verified
+
+● request_refund()
+
+Processing...
+
+Then after actual backend response:
+
+✓ request_refund()
+
+✓ Action completed
+
+Resolution complete.
+
+The UI must call the EXISTING backend API.
+
+No fake success.
+
+No fake API calls.
+
+No mock responses.
+
+==================================================
+9. TOOL RUNTIME PANEL
+==================================================
+
+Create a right-side panel:
+
+"TOOL RUNTIME"
+
+Show the agent's available tool categories.
+
+BOOKING TOOLS
+
+✓ get_customer
+✓ get_booking
+
+FLIGHT TOOLS
+
+✓ get_flight_status
+
+POLICY TOOLS
+
+✓ evaluate_policy
+
+ACTION TOOLS
+
+○ rebook_flight
+○ request_refund
+○ meal_voucher
+○ lounge_access
+○ hotel_support
+
+ESCALATION
+
+○ create_escalation
+
+IMPORTANT:
+
+Only show tools/actions that actually exist in the current backend/AI architecture.
+
+Do NOT invent backend endpoints.
+
+Do not create fake tool execution.
+
+==================================================
+10. TOOL EXECUTION ANIMATION
+==================================================
+
+When an actual operation is happening, visually highlight the tool.
+
+Example:
+
+● evaluate_policy()
+
+Checking available resolution...
+
+Then:
+
+✓ evaluate_policy()
+
+Resolution found.
+
+For an action:
+
+● request_refund()
+
+Executing...
+
+Then:
+
+✓ request_refund()
+
+Completed.
+
+Use subtle Framer Motion transitions.
+
+==================================================
+11. AGENT EXECUTION TIMELINE
+==================================================
+
+Below the main workspace create:
+
+"AGENT EXECUTION"
+
+Timeline:
+
+✓ Context
+→
+✓ Verify
+→
+✓ Policy
+→
+● Decision
+→
+○ Action
+→
+○ Result
+
+Animate the progress.
+
+This should communicate that the agent is performing a workflow, not simply chatting.
+
+==================================================
+12. AGENT TRACE DRAWER
+==================================================
+
+Add:
+
+[ View Agent Trace ]
+
+When clicked, open a right-side drawer.
+
+Show ONLY observable application/tool events.
+
+Example:
+
+23:41:02
+● Request received
+
+23:41:02
+✓ get_booking()
+SK4821X verified
+
+23:41:03
+✓ get_flight_status()
+SK-204 → CANCELLED
+
+23:41:03
+✓ evaluate_policy()
+AIRLINE_CANCELLATION
+
+23:41:04
+✓ Resolution generated
+REBOOK / REFUND
+
+23:41:08
+● Waiting for customer
+
+If an action occurs:
+
+23:42:10
+● request_refund()
+
+23:42:11
+✓ request_refund()
+
+23:42:11
+✓ Resolution completed
+
+IMPORTANT:
+
+Do NOT display:
+- chain-of-thought
+- hidden reasoning
+- private model reasoning
+- fabricated internal thoughts
+
+Only display safe high-level execution/tool events.
+
+==================================================
+13. CUSTOMER CHAT
+==================================================
+
+Move chat to a secondary section.
+
+Label:
+
+"Customer Conversation"
+
+The chat should still fully work.
+
+Keep:
+
+- message history
+- typing indicator
+- input
+- send button
+- suggested prompts
+
+But it should no longer dominate the screen.
+
+The primary UI should be the agent workspace.
+
+Add:
+
+[ Open Chat ]
+
+if appropriate.
+
+==================================================
+14. DIFFERENT AGENT STATES
+==================================================
+
+The UI should dynamically support:
+
+STATE 1:
+
+AGENT ACTIVE
+
+Example:
+
+● Analyzing request
+
+STATE 2:
+
+WAITING FOR CUSTOMER
+
+Example:
+
+✓ Policy evaluated
+
+2 resolutions available
+
+[ REBOOK ]
+[ REFUND ]
+
+STATE 3:
+
+EXECUTING ACTION
+
+Example:
+
+⚡ AGENT EXECUTING
+
+✓ Booking verified
+✓ Policy verified
+● request_refund()
+
+STATE 4:
+
+RESOLUTION COMPLETE
+
+Example:
+
+✓ RESOLUTION COMPLETED
+
+Action completed successfully.
+
+STATE 5:
+
+ESCALATION
+
+Example:
+
+⚠ SUPERVISOR REVIEW
+
+✓ Booking verified
+✓ Policy evaluated
+⚠ Request requires supervisor approval
+✓ Escalation created
+
+[ View Escalation ]
+
+Use actual backend/application state.
+
+==================================================
+15. ESCALATION EXPERIENCE
+==================================================
+
+For cases requiring escalation:
+
+Create a strong visual:
+
+"AGENT ESCALATION"
+
+Show:
+
+- exception detected
+- reason
+- escalation created
+- supervisor review status
+- View Escalation button
+
+Use the existing escalation API/page.
+
+Never create fake escalation records.
+
+==================================================
+16. CASE-BASED DESIGN
+==================================================
+
+The agent should feel like it is operating on a CASE.
+
+Not just chatting.
+
+Use terminology such as:
+
+CASE
+AGENT STATUS
+AGENT WORKSPACE
+TOOL RUNTIME
+AGENT DECISION
+ACTION EXECUTION
+EXECUTION TRACE
+RESOLUTION
+SUPERVISOR REVIEW
+
+Do not overuse the word "AI".
+
+==================================================
+17. REAL DATA ONLY
+==================================================
+
+The application must dynamically work with:
+
+SK4821X
+TR1190B
+WL7742
+
+Examples:
+
+SK4821X:
+Cancellation
+
+TR1190B:
+4-hour delay
+
+WL7742:
+6-hour delay
+
+Use the actual backend/policy results.
+
+Do not hardcode scenario-specific UI logic.
+
+==================================================
+18. API ARCHITECTURE
+==================================================
+
+Reuse the existing:
+
+src/services/api.js
+
+Reuse:
+
+AuthContext
+existing routing
+existing API functions
+existing backend integration
+
+Do not scatter random Axios requests across components.
+
+Do not change working backend APIs.
+
+Do not add mock data.
+
+==================================================
+19. IMPORTANT AGENT SAFETY
+==================================================
+
+The agent UI must NEVER imply that the LLM itself is the authority.
+
+The architecture is:
+
+Frontend
+↓
+Node backend
+↓
+Python AI service
+↓
+LangGraph
+↓
+Controlled backend tools
+↓
+Policy engine
+↓
+Database / actions
+
+The deterministic backend policy engine remains the authority.
+
+The AI agent orchestrates and explains.
+
+==================================================
+20. VISUAL QUALITY
+==================================================
+
+Make it feel like:
+
+AIRLINE OPERATIONS
++
+CUSTOMER RESOLUTION CENTER
++
+AI AGENT
++
+TOOL EXECUTION SYSTEM
+
+Not:
+
+CHATGPT CLONE
+Not:
+GENERIC DASHBOARD
+
+Use:
+
+- glass panels
+- thin borders
+- status indicators
+- live execution indicators
+- animated timeline
+- tool badges
+- command-center layout
+- aviation icons
+- subtle gradients
+- premium dark UI
+
+Keep animations subtle and professional.
+
+Respect prefers-reduced-motion.
+
+==================================================
+21. RESPONSIVE
+==================================================
+
+Desktop:
+
+3-column Agent Workspace.
+
+Tablet:
+
+Collapse Tool Runtime into a drawer/tab.
+
+Mobile:
+
+Order:
+
+1. Agent Status
+2. Case Context
+3. Agent Decision
+4. Action
+5. Tool Runtime
+6. Execution Timeline
+7. Customer Conversation
+
+No horizontal scrolling.
+
+Test:
+
+390px
+768px
+1440px
+
+==================================================
+22. DO NOT BREAK EXISTING FEATURES
+==================================================
+
+Before coding:
+
+Inspect:
+
+- current AI Assistant page
+- Chat components
+- API service
+- AuthContext
+- routing
+- booking page
+- escalation page
+- existing agent integration
+
+Reuse existing components where possible.
+
+Do NOT rewrite working authentication.
+
+Do NOT rewrite the AI integration.
+
+Do NOT rewrite Node backend.
+
+Do NOT rewrite Python AI service.
+
+==================================================
+23. IMPLEMENTATION PROCESS
+==================================================
+
+First inspect the existing frontend architecture.
+
+Then create/reuse components such as:
+
+AgentCommandCenter
+CaseContext
+AgentStatus
+AgentStateMachine
+AgentDecision
+ToolRuntime
+ToolExecution
+ExecutionTimeline
+AgentTraceDrawer
+ActionExecution
+CustomerConversation
+EscalationStatus
+
+Use clean reusable React components.
+
+Keep business logic out of presentation components where possible.
+
+==================================================
+24. FINAL VALIDATION
+==================================================
+
+Run:
+
+npm run build
+
+Fix every build error.
+
+Then test:
+
+Login
+Dashboard
+PNR search
+SK4821X
+TR1190B
+WL7742
+AI Agent
+Tool execution states
+Rebook/refund/action flows
+Escalation
+Booking details
+Logout
+
+Verify:
+
+- no mock data
+- no fake success
+- no broken API calls
+- no console errors
+- responsive layout
+- no horizontal scrolling
+- existing AI functionality still works
+
+Finally report:
+
+1. files changed
+2. components created
+3. agent UI features added
+4. existing APIs reused
+5. build result
+6. any limitations
+
+MOST IMPORTANT:
+
+Do not simply make the chatbot prettier.
+
+Transform the experience from:
+
+"CHATBOT"
+
+into:
+
+"AI AGENT COMMAND CENTER"
+
+The user should immediately understand that AeroResolve is an agent that:
+
+UNDERSTANDS
+→ RETRIEVES CONTEXT
+→ VERIFIES
+→ EVALUATES POLICY
+→ SELECTS A RESOLUTION
+→ USES TOOLS
+→ EXECUTES ACTIONS
+→ VERIFIES RESULTS
+→ ESCALATES WHEN REQUIRED

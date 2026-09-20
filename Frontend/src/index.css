@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #06060c;
+  --color-surface: #0b0b16;
+
+  --color-electric: #3b82f6;
+  --color-violet: #8b5cf6;
+  --color-cyan: #22d3ee;
+
+  --color-status-cancelled: #f43f5e;
+  --color-status-delayed: #f59e0b;
+  --color-status-confirmed: #22c55e;
+  --color-status-info: #3b82f6;
+
+  --shadow-glow-violet: 0 0 60px -15px rgba(139, 92, 246, 0.5);
+  --shadow-glow-blue: 0 0 60px -15px rgba(59, 130, 246, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: #fff;
+}
+
+/* Visible keyboard focus everywhere (buttons, links, inputs) - mouse/touch
+   interaction stays clean since :focus-visible only fires for keyboard nav. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.8);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Slim, dark scrollbar to match the premium surface */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.4) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.35);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.glass {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.07),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, #ffffff 10%, #c4b5fd 60%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-gradient {
+  background-image: linear-gradient(120deg, var(--color-electric), var(--color-violet));
+}
+
+/* AmbientBackground: runway edge lights blink in a slow staggered cycle */
+@keyframes runway-light-blink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+.runway-light {
+  animation: runway-light-blink 2.4s ease-in-out infinite;
+}
+
+/* AmbientBackground: control tower beacon */
+@keyframes tower-beacon-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+.tower-beacon {
+  animation: tower-beacon-pulse 1.6s ease-in-out infinite;
+}
+
+/* AmbientBackground: distant sky trail beacon drifting left to right */
+@keyframes sky-trail-move {
+  0% { transform: translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translateX(340%); opacity: 0; }
+}
+.sky-trail-head {
+  position: absolute;
+  inset: 0;
+  animation-name: sky-trail-move;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

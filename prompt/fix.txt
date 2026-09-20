@@ -1,0 +1,217 @@
+Update my AeroResolve AI project to reduce Gemini API usage from 2 Gemini calls per chat request to exactly 1 Gemini call per chat request.
+
+CURRENT PROBLEM:
+The AI service currently calls Gemini twice:
+1. classify_intent()
+2. generate_customer_message()
+
+This is causing Gemini free-tier rate-limit errors (429 RESOURCE_EXHAUSTED, 5 requests/minute).
+
+GOAL:
+Use only ONE Gemini generate_content() call for each user chat request.
+
+NEW FLOW:
+User message
+→ deterministic/local intent detection
+→ load customer + booking context
+→ call existing Node backend policy engine
+→ ONE Gemini call to generate the final customer response
+→ return response
+
+IMPORTANT ARCHITECTURE RULES:
+- Do NOT modify the Node.js backend policy engine.
+- Do NOT modify existing assignment rules.
+- Do NOT move policy decisions into Gemini.
+- Node backend remains the source of truth.
+- Do NOT invent airline rules, customer information, flight data, compensation, or actions.
+- Keep LangGraph.
+- Keep FastAPI.
+- Keep existing backend tools.
+- Keep existing fallback behavior.
+- Keep Gemini API key only in AI_Services/.env.
+- JavaScript/Node backend must remain JavaScript.
+- Python is only for AI service.
+
+IMPLEMENTATION:
+
+1. Remove the Gemini call from intent classification.
+
+Currently gemini_service.py has something like:
+classify_intent()
+
+Change it so intent classification is deterministic/local.
+
+Create a small function such as:
+
+def classify_intent_local(message: str) -> str:
+    text = message.lower()
+
+    if any(word in text for word in [
+        "cancel", "cancelled", "cancellation",
+        "refund", "rebook", "reschedule"
+    ]):
+        return "disruption_inquiry"
+
+    if any(word in text for word in [
+        "delay", "delayed", "late", "flight status"
+    ]):
+        return "disruption_inquiry"
+
+    if any(word in text for word in [
+        "hotel", "lounge", "meal", "voucher"
+    ]):
+        return "disruption_inquiry"
+
+    return "general_inquiry"
+
+Keep this conservative. It is only for routing and MUST NOT make policy decisions.
+
+2. Keep the existing backend policy resolution exactly as it is.
+
+The AI graph must still call the Node backend:
+
+POST /api/agent/chat
+
+The response from Node must determine:
+- entitlement
+- allowed actions
+- policy result
+- escalation requirements
+- customer/booking facts
+
+Do NOT let Gemini decide these.
+
+3. Make exactly ONE Gemini call after policy resolution.
+
+The ONE Gemini call should receive:
+- original customer message
+- customer information returned by backend
+- booking information returned by backend
+- flight information returned by backend
+- policy resolution returned by backend
+- allowed actions
+- escalation information if present
+
+The prompt must explicitly say:
+
+"You are a customer-facing airline support assistant.
+Use ONLY the supplied customer, booking, flight, and policy information.
+Do not invent policies, compensation, actions, dates, prices, or flight details.
+The backend policy result is authoritative.
+Explain the result clearly and naturally.
+If an action was successfully performed, tell the customer.
+If an action is not allowed or requires escalation, explain that clearly.
+Never claim an action happened unless the backend confirms it."
+
+4. Update gemini_service.py.
+
+Keep generate_customer_message(), but make it the ONLY function that calls:
+
+self._client.aio.models.generate_content(...)
+
+Remove all Gemini API calls from classify_intent().
+
+5. Update LangGraph nodes/workflow.
+
+Current flow is approximately:
+
+intent
+→ load context
+→ policy
+→ response
+
+Change it to:
+
+intent_local
+→ load_context
+→ policy_resolution
+→ generate_response
+
+The intent node must NOT call Gemini.
+
+6. Preserve fallback behavior.
+
+If Gemini returns:
+429
+timeout
+API error
+missing API key
+or any other Gemini failure
+
+the system must still return the deterministic fallback response.
+
+Do NOT return a 500 error just because Gemini fails.
+
+7. Add logging so I can verify the number of Gemini calls.
+
+For each request log:
+
+Chat request received
+Intent classified locally
+Policy resolution completed
+Calling Gemini once for final response
+Gemini response generated
+
+Do NOT log the Gemini API key or any secret.
+
+8. IMPORTANT RATE-LIMIT OPTIMIZATION:
+
+Do not retry aggressively on 429 errors.
+
+If Gemini returns 429:
+- immediately use fallback response
+- do not make additional Gemini retry calls inside the same request
+
+This is important because retrying a rate-limited request wastes quota.
+
+9. Keep API response format backward compatible.
+
+Existing frontend should continue receiving:
+
+aiMessage
+customer
+booking
+policy/action information
+escalation
+
+Do not break the existing React frontend.
+
+10. Run tests after modification.
+
+Run:
+
+python -m unittest discover tests
+
+Then start AI service:
+
+python -m uvicorn app.main:app --reload --port 8000
+
+Test:
+
+GET /health
+
+Then test one chat request with PNR:
+
+SK4821X
+
+Verify logs show only ONE request to:
+
+https://generativelanguage.googleapis.com/.../generateContent
+
+for the entire chat request.
+
+Also verify that these still work:
+
+SK4821X
+TR1190B
+WL7742
+
+FINAL REQUIREMENT:
+Before finishing, give me a concise summary of:
+- files changed
+- how many Gemini calls happen per chat now
+- whether Node policy engine was untouched
+- test results
+- exact command to run the AI service
+
+Do not rewrite unrelated files or change the existing frontend UI.
