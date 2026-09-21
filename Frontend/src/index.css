@@ -132,12 +132,12 @@ select:focus-visible,
 /* AmbientBackground: very slow drifting cloud layers - transform/opacity
    only, so this stays cheap to composite (GPU) even running indefinitely. */
 @keyframes cloud-drift {
-  0% { transform: translate3d(-6%, 0, 0); }
-  50% { transform: translate3d(6%, -2%, 0); }
-  100% { transform: translate3d(-6%, 0, 0); }
+  0% { transform: translate3d(-11%, 1%, 0); }
+  50% { transform: translate3d(11%, -4%, 0); }
+  100% { transform: translate3d(-11%, 1%, 0); }
 }
 .cloud-drift {
-  animation: cloud-drift 60s ease-in-out infinite;
+  animation: cloud-drift 46s ease-in-out infinite;
   will-change: transform;
 }
 
@@ -152,6 +152,48 @@ select:focus-visible,
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   will-change: opacity;
+}
+
+/* AmbientBackground: a handful of brighter stars twinkle on top of the
+   static dot-grid field, each on its own offset - opacity-only. */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+.star-twinkle {
+  animation-name: star-twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: opacity;
+}
+
+/* AirplaneBackground: a quick double-flash white strobe on the wingtip,
+   long dark pause between flashes like a real anti-collision strobe. */
+@keyframes nav-strobe {
+  0%, 88%, 100% { opacity: 0; }
+  90%, 93% { opacity: 1; }
+  91.5% { opacity: 0.2; }
+}
+.nav-strobe {
+  animation: nav-strobe 3.4s ease-in-out infinite;
+}
+
+/* AirplaneBackground: the steady red anti-collision beacon on the fuselage. */
+@keyframes nav-beacon {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+.nav-beacon {
+  animation: nav-beacon 1.15s ease-in-out infinite;
+}
+
+/* AirplaneBackground: engine exhaust glow, a slow warm breathing pulse. */
+@keyframes engine-glow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.75; }
+}
+.engine-glow {
+  animation: engine-glow 2.6s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
