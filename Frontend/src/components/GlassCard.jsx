@@ -36,17 +36,22 @@ export default function GlassCard({
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      whileHover={tilt ? { y: -4 } : undefined}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      // Every card lifts slightly on hover, not just tilt cards - a small,
+      // consistent "floating panel" cue rather than a special case.
+      whileHover={prefersReducedMotion ? undefined : { y: -3 }}
+      transition={{ duration: 0.28, ease: "easeOut" }}
       style={{
         transform: tilt
           ? "perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))"
           : undefined,
         transformStyle: "preserve-3d",
-        boxShadow: glow ? "var(--shadow-glow-violet)" : undefined,
+        // A persistent, restrained accent glow for hero/important cards only
+        // - layered into .glass's own box-shadow via --card-glow rather than
+        // replacing it, so the soft elevation shadow never disappears.
+        ...(glow ? { "--card-glow": "var(--shadow-glow-violet)" } : {}),
         ...style,
       }}
-      className={`glass rounded-2xl transition-shadow duration-300 ${className}`}
+      className={`glass rounded-[20px] ${className}`}
       {...props}
     >
       {children}

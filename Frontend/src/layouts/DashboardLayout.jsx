@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import AmbientBackground from "../components/AmbientBackground";
+import AirplaneBackground from "../components/AirplaneBackground";
 import LoadingScreen from "../components/LoadingScreen";
 
 export default function DashboardLayout() {
@@ -19,6 +20,7 @@ export default function DashboardLayout() {
     <NotificationsProvider>
       <div className="relative min-h-screen">
         <AmbientBackground />
+        <AirplaneBackground />
         <Navbar />
         <main className="mx-auto w-full max-w-6xl px-4 pb-24 pt-8 md:px-6 md:pb-16">
           <AnimatePresence mode="wait">

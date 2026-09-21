@@ -35,7 +35,7 @@ export default function Navbar() {
       initial={{ opacity: 0, y: -16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="sticky top-4 z-40 mx-auto hidden w-[95%] max-w-6xl items-center justify-between rounded-2xl glass px-5 py-3 md:flex"
+      className="sticky top-4 z-40 mx-auto hidden w-[95%] max-w-6xl items-center justify-between rounded-[20px] glass px-5 py-3 md:flex"
     >
       <Link to="/dashboard" className="flex items-center gap-2.5">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg btn-gradient text-white">
@@ -84,7 +84,7 @@ export default function Navbar() {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute right-0 top-11 w-52 rounded-xl glass p-3 text-sm"
+            className="absolute right-0 top-11 w-52 rounded-2xl glass p-3 text-sm"
           >
             <p className="truncate font-semibold text-white/90">
               {user?.fullName || "AeroResolve Customer"}
