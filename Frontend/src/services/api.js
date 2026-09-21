@@ -8,8 +8,13 @@ export const tokenStorage = {
   clear: () => localStorage.removeItem(TOKEN_KEY),
 };
 
+// VITE_API_BASE_URL is the name set in the Vercel project's environment
+// variables for production. VITE_API_URL is kept as a fallback so existing
+// local .env files (and anyone's shell env) that predate this rename still
+// work without any changes.
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
+  baseURL:
+    import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || "http://localhost:5000",
 });
 
 api.interceptors.request.use((config) => {
