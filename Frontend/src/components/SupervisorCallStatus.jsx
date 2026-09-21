@@ -32,11 +32,17 @@ export default function SupervisorCallStatus({ escalation, initialCall, onStatus
     onStatusChange?.(next);
   }
 
+  // Re-subscribes whenever the call identity changes (e.g. NOT_STARTED -> a
+  // freshly initiated call), not just when escalationId changes - otherwise
+  // an initial poll that ends immediately on NOT_STARTED (a terminal status
+  // with nothing to watch) would never resume once placeCall() actually
+  // starts a call, and the final Exotel status would never be picked up.
+  const callId = call?.callId;
   useEffect(() => {
     if (!escalationId) return undefined;
     return pollCallStatus(escalationId, reportStatus);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [escalationId]);
+  }, [escalationId, callId]);
 
   async function placeCall() {
     setConfirmStatus("loading");
@@ -45,7 +51,16 @@ export default function SupervisorCallStatus({ escalation, initialCall, onStatus
       const result = await ensureEscalationAndCall({ escalation, reason: "" });
       reportStatus(result.call);
 
-      if (result.call.callStatus === "NOT_CONFIGURED" || result.call.callStatus === "CALL_FAILED") {
+      // A successful initiation (result.success, i.e. response.success from
+      // the backend) is never itself a failure - it only means the call
+      // attempt was recorded. The only real failures are the explicit
+      // terminal states the backend reports back in call.callStatus, or
+      // result.success being false/the request throwing outright.
+      const failedToStart =
+        !result.success ||
+        result.call.callStatus === "NOT_CONFIGURED" ||
+        result.call.callStatus === "CALL_FAILED";
+      if (failedToStart) {
         setConfirmError("Unable to connect to supervisor. Please try again.");
         setConfirmStatus("error");
         return;

@@ -35,12 +35,19 @@ export default function CallingAgentHero({
   onCallStatusChange,
 }) {
   const escalationId = escalation?.id;
+  // Re-subscribes whenever the call identity changes (e.g. NOT_STARTED -> a
+  // freshly initiated call), not just when escalationId changes - otherwise
+  // an initial poll that ends immediately on NOT_STARTED (a terminal status
+  // with nothing to watch) would never resume once a call is actually
+  // started via SupervisorCallButton, and the final Exotel status would
+  // never be picked up.
+  const callId = call?.callId;
 
   useEffect(() => {
     if (!escalationId) return undefined;
     return pollCallStatus(escalationId, (next) => onCallStatusChange?.(next));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [escalationId]);
+  }, [escalationId, callId]);
 
   const callStatus = call?.callStatus;
   const meta = callStatus ? callStatusMeta(callStatus) : null;

@@ -15,8 +15,14 @@ export async function ensureEscalationAndCall({ escalation, bookingId, pnr, reas
     });
     activeEscalation = res.data;
   }
+  // voiceApi.initiateCall() already resolves to the backend's unwrapped body
+  // ({ success, data }) via the response interceptor in services/api.js - the
+  // call outcome lives in callRes.data (never callRes.data.success, which
+  // doesn't exist). callRes.success === true only means "the call attempt
+  // was recorded", not that Exotel has connected it yet - that progress is
+  // reported separately via callRes.data.callStatus and picked up by polling.
   const callRes = await voiceApi.initiateCall(activeEscalation.id);
-  return { escalation: activeEscalation, call: callRes.data };
+  return { escalation: activeEscalation, call: callRes.data, success: callRes.success !== false };
 }
 
 // Polls GET /api/voice/escalations/:id/call until the call reaches a

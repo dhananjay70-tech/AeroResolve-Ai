@@ -42,7 +42,16 @@ export default function SupervisorCallButton({
       }
       onCallStarted?.(result.call, result.escalation);
 
-      if (result.call.callStatus === "NOT_CONFIGURED" || result.call.callStatus === "CALL_FAILED") {
+      // A successful initiation (result.success, i.e. response.success from
+      // the backend) is never itself a failure - it only means the call
+      // attempt was recorded. The only real failures are the explicit
+      // terminal states the backend reports back in call.callStatus, or
+      // result.success being false/the request throwing outright.
+      const failedToStart =
+        !result.success ||
+        result.call.callStatus === "NOT_CONFIGURED" ||
+        result.call.callStatus === "CALL_FAILED";
+      if (failedToStart) {
         setError("Unable to connect to supervisor. Please try again.");
         setStatus("error");
         return;
